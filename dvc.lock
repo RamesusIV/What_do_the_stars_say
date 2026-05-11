@@ -1,0 +1,65 @@
+schema: '2.0'
+stages:
+  question_generation:
+    cmd: python src/questions.py
+    deps:
+    - path: data/constellation_mythology_unique_88.csv
+      hash: md5
+      md5: c8b57377a7788697e40088321c5bb71b
+      size: 41130
+    - path: src/questions.py
+      hash: md5
+      md5: 49024972f53669aeb01525ee1042f184
+      size: 1038
+  train:
+    cmd: python src/train.py
+    deps:
+    - path: data/training_dataset.csv
+      hash: md5
+      md5: 3e49ec83c417ed0697bc1135c6e22d21
+      size: 170494
+    - path: src/train.py
+      hash: md5
+      md5: d17df55319855620356b8966251f730b
+      size: 2429
+  data_drift:
+    cmd: python src/data_drift.py
+    deps:
+    - path: data/production_queries.csv
+      hash: md5
+      md5: 64b92501124e8fd37171fae849bf50a9
+      size: 1527
+    - path: data/training_dataset.csv
+      hash: md5
+      md5: 3e49ec83c417ed0697bc1135c6e22d21
+      size: 170494
+    - path: src/data_drift.py
+      hash: md5
+      md5: d692394d2fc2e725e8466cf88461e831
+      size: 779
+    outs:
+    - path: data_drift_report.json
+      hash: md5
+      md5: 26006d2259e72c51f136d4f3578d9877
+      size: 214
+  model_drift:
+    cmd: python src/model_drift.py
+    deps:
+    - path: data/production_queries.csv
+      hash: md5
+      md5: 64b92501124e8fd37171fae849bf50a9
+      size: 1527
+    - path: models
+      hash: md5
+      md5: 77b74a9359d338f13b976f0aa6dc089b.dir
+      size: 92122522
+      nfiles: 11
+    - path: src/model_drift.py
+      hash: md5
+      md5: 07960c0f92445b2ad8b8e2222783df14
+      size: 563
+    outs:
+    - path: model_drift_report.json
+      hash: md5
+      md5: 691a7155dfe8818c3dd47b4f02584dc1
+      size: 129

@@ -1,0 +1,11 @@
+pandas
+numpy
+transformers
+torch
+sentence-transformers
+faiss-cpu
+scikit-learn
+streamlit
+dvc
+torch
+torchvision

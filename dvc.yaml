@@ -1,0 +1,30 @@
+stages:
+  question_generation:
+    cmd: python src/questions.py
+    deps:
+      - src/questions.py
+      - data/constellation_mythology_unique_88.csv
+
+  train:
+    cmd: python src/train.py
+    deps:
+      - src/train.py
+      - data/training_dataset.csv
+
+  data_drift:
+    cmd: python src/data_drift.py
+    deps:
+      - src/data_drift.py
+      - data/training_dataset.csv
+      - data/production_queries.csv
+    outs:
+      - data_drift_report.json
+
+  model_drift:
+    cmd: python src/model_drift.py
+    deps:
+      - src/model_drift.py
+      - models
+      - data/production_queries.csv
+    outs:
+      - model_drift_report.json
